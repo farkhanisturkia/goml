@@ -22,17 +22,14 @@ func ValidationJSON(d *Datas) error {
     }
     sort.Strings(inputKeys)
 
-    if len(inputKeys) != len(d.Fuzzification) {
-        return fmt.Errorf("mismatch in Input and Fuzzification: input keys length (%d) != fuzzification entries (%d)", len(inputKeys), len(d.Fuzzification))
+    if len(inputKeys) != len(d.Dataset) {
+        return fmt.Errorf("mismatch in Input and Dataset: input keys length (%d) != dataset entries (%d)", len(inputKeys), len(d.Dataset))
     }
 
-    for i, fuzz := range d.Fuzzification {
-        if len(fuzz) != 1 {
-            return fmt.Errorf("fuzzification entry %d should contain exactly one key, got %d", i, len(fuzz))
-        }
-        for fuzzKey := range fuzz {
-            if fuzzKey != inputKeys[i] {
-                return fmt.Errorf("mismatch in Input and Fuzzification: input key %s != fuzzification key %s at index %d", inputKeys[i], fuzzKey, i)
+    for i, dataset := range d.Dataset {
+        for datasetKey := range dataset {
+            if datasetKey != inputKeys[i] {
+                return fmt.Errorf("mismatch in Input and Dataset: input key %s != dataset key %s at index %d", inputKeys[i], datasetKey, i)
             }
         }
     }
