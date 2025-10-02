@@ -25,7 +25,7 @@ func UseFuzzification(d *Datas, m Mamdani) Mamdani {
 			for key, decValue := range declaration {
 				if key == inputName {
 					if inputValue <= decValue.Min {
-						m.Fuzzification = append(m.Fuzzification, map[string]Fuzzification{
+						m.Fuzzifications = append(m.Fuzzifications, map[string]Fuzzification{
 							inputName: Fuzzification{
 								Minus: 1,
 								Normal: 0,
@@ -33,7 +33,7 @@ func UseFuzzification(d *Datas, m Mamdani) Mamdani {
 							},
 						})
 					} else if inputValue >= decValue.Min && inputValue < decValue.Mid {
-						m.Fuzzification = append(m.Fuzzification, map[string]Fuzzification{
+						m.Fuzzifications = append(m.Fuzzifications, map[string]Fuzzification{
 							inputName: Fuzzification{
 								Minus: (decValue.Mid - inputValue) / (decValue.Mid - decValue.Min),
 								Normal: (inputValue - decValue.Min) / (decValue.Mid - decValue.Min),
@@ -41,7 +41,7 @@ func UseFuzzification(d *Datas, m Mamdani) Mamdani {
 							},
 						})
 					} else if inputValue >= decValue.Mid && inputValue < decValue.Max {
-						m.Fuzzification = append(m.Fuzzification, map[string]Fuzzification{
+						m.Fuzzifications = append(m.Fuzzifications, map[string]Fuzzification{
 							inputName: Fuzzification{
 								Minus: 0,
 								Normal: (decValue.Max - inputValue) / (decValue.Max - decValue.Mid),
@@ -49,7 +49,7 @@ func UseFuzzification(d *Datas, m Mamdani) Mamdani {
 							},
 						})
 					} else {
-						m.Fuzzification = append(m.Fuzzification, map[string]Fuzzification{
+						m.Fuzzifications = append(m.Fuzzifications, map[string]Fuzzification{
 							inputName: Fuzzification{
 								Minus: 0,
 								Normal: 0,
