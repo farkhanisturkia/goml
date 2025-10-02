@@ -10,6 +10,9 @@ b. install module
 go get github.com/farkhanisturkia/goml
 ```
 #### **Datas Preparation Tools**
+models:
+`FMamdani`, `FTsukamoto`
+
 Parsing JSON:
 ```
 datas, err := goml.ParseJSON(jsonStr)
@@ -20,7 +23,8 @@ if err != nil {
 ```
 Validating JSON:
 ```
-err = goml.ValidationJSON(datas)
+models := goml.Models{Model: goml.FMamdani}
+err = goml.ValidationJSON(datas, models)
 if err != nil {
     fmt.Println("Error:", err)
     return
