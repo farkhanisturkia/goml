@@ -4,6 +4,7 @@ import (
     "fmt"
 	"encoding/json"
     "sort"
+    "math"
 )
 
 func ParseJSON(jsonInput []byte) (*Datas, error) {
@@ -34,6 +35,10 @@ func ValidationJSON(d *Datas, models Models) error {
                     return fmt.Errorf("mismatch in Input and Dataset: input key %s != dataset key %s at index %d", inputKeys[i], datasetKey, i)
                 }
             }
+        }
+
+        if math.Pow(3, float64(len(d.Dataset))) != float64(len(d.Rules)) {
+            return fmt.Errorf("rules length must be %0.f", math.Pow(3, float64(len(d.Dataset))))
         }
     case FTsukamoto:
 		return fmt.Errorf("Tsukamoto validation not implemented yet")
