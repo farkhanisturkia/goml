@@ -1,4 +1,33 @@
-Example JSON:
+#### **Instalation**
+a. create new project
+```
+mkdir example-app
+cd example-app
+go mod init example-app
+```
+b. install module
+```
+go get github.com/farkhanisturkia/goml
+```
+#### **Datas Preparation Tools**
+Parsing JSON:
+```
+datas, err := goml.ParseJSON(jsonStr)
+if err != nil {
+    fmt.Println("Error:", err)
+    return
+}
+```
+Validating JSON:
+```
+err = goml.ValidationJSON(datas)
+if err != nil {
+    fmt.Println("Error:", err)
+    return
+}
+```
+#### **Fuzzy Mamdani**
+Example JSON as Body Input:
 ```
 jsonStr := []byte(`{
     "Input": {"A": 30, "B": 70},
@@ -7,4 +36,12 @@ jsonStr := []byte(`{
         {"B": [25, 75, 43, 12, 87]}
     ]
 }`)
+```
+Run Fuzzy Mamdani:
+```
+mamdani, err := goml.UseMamdani(datas)
+if err != nil {
+    fmt.Println("Error:", err)
+    return
+}
 ```
