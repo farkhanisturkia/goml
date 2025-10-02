@@ -22,6 +22,13 @@ type Declaration struct {
 	Max      float64   `json:"Max"`
 }
 
+type Fuzzification struct {
+	Plus      float64   `json:"Plus"`
+	Normal    float64   `json:"Normal"`
+	Minus      float64   `json:"Minus"`
+}
+
 type Mamdani struct {
 	Declarations    []map[string]Declaration `json:"Declaration"`
+	Fuzzifications   []map[string]Fuzzification `json:"Fuzzification"`
 }
