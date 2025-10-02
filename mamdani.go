@@ -2,7 +2,7 @@ package goml
 
 import "slices"
 
-func UseFuzzification(d *Datas) Mamdani {
+func UseDeclarations(d *Datas) Mamdani {
 	var mamdani Mamdani
 	for _, dataset := range d.Dataset {
 		for itemName, item := range dataset {
@@ -19,9 +19,56 @@ func UseFuzzification(d *Datas) Mamdani {
 	return mamdani
 }
 
+func UseFuzzification(d *Datas, m Mamdani) Mamdani {
+	for inputName, inputValue := range d.Input {
+		for _, declaration := range m.Declarations {
+			for key, decValue := range declaration {
+				if key == inputName {
+					if inputValue <= decValue.Min {
+						m.Fuzzification = append(m.Fuzzification, map[string]Fuzzification{
+							inputName: Fuzzification{
+								Minus: 1,
+								Normal: 0,
+								Plus: 0,
+							},
+						})
+					} else if inputValue >= decValue.Min && inputValue < decValue.Mid {
+						m.Fuzzification = append(m.Fuzzification, map[string]Fuzzification{
+							inputName: Fuzzification{
+								Minus: (decValue.Mid - inputValue) / (decValue.Mid - decValue.Min),
+								Normal: (inputValue - decValue.Min) / (decValue.Mid - decValue.Min),
+								Plus: 0,
+							},
+						})
+					} else if inputValue >= decValue.Mid && inputValue < decValue.Max {
+						m.Fuzzification = append(m.Fuzzification, map[string]Fuzzification{
+							inputName: Fuzzification{
+								Minus: 0,
+								Normal: (decValue.Max - inputValue) / (decValue.Max - decValue.Mid),
+								Plus:  (inputValue - decValue.Mid) / (decValue.Max - decValue.Mid),
+							},
+						})
+					} else {
+						m.Fuzzification = append(m.Fuzzification, map[string]Fuzzification{
+							inputName: Fuzzification{
+								Minus: 0,
+								Normal: 0,
+								Plus: 1,
+							},
+						})
+					}
+				}
+			}
+		}
+	}
+
+	return m
+}
+
 func UseMamdani(d *Datas) (Mamdani, error) {
 	var mamdani Mamdani
-	mamdani = UseFuzzification(d)
+	mamdani = UseDeclarations(d)
+	mamdani = UseFuzzification(d, mamdani)
 
 	return mamdani, nil
 }
