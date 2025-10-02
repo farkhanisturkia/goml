@@ -12,23 +12,24 @@ type Models struct {
 }
 
 type Datas struct {
-    Input      map[string]float64   `json:"Input"`
-    Dataset    []map[string][]float64 `json:"Dataset"`
+    Input      map[string]float64    	`json:"Input"`
+    Dataset    []map[string][]float64 	`json:"Dataset"`
+	Rules      []map[string]string		`json:"Rules"`
 }
 
 type Declaration struct {
-	Min      float64   `json:"Min"`
-	Mid      float64   `json:"Mid"`
-	Max      float64   `json:"Max"`
+	Min      float64 	`json:"Min"`
+	Mid      float64 	`json:"Mid"`
+	Max      float64 	`json:"Max"`
 }
 
 type Fuzzification struct {
-	Plus      float64   `json:"Plus"`
-	Normal    float64   `json:"Normal"`
-	Minus      float64   `json:"Minus"`
+	Plus      float64 	`json:"Plus"`
+	Normal    float64 	`json:"Normal"`
+	Minus     float64 	`json:"Minus"`
 }
 
 type Mamdani struct {
-	Declarations    []map[string]Declaration `json:"Declaration"`
-	Fuzzifications   []map[string]Fuzzification `json:"Fuzzification"`
+	Declarations    []map[string]Declaration 	`json:"Declaration"`
+	Fuzzifications  []map[string]Fuzzification 	`json:"Fuzzification"`
 }
